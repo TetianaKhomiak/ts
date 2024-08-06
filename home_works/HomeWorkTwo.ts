@@ -8,7 +8,6 @@ type Lecturer = {
     contacts: string[];
   };
   
-
 class School {
     private _areas: Area[] = [];
     private _lecturers: Lecturer[] = [];
@@ -94,24 +93,6 @@ class School {
     }
   }
 
-  // class Group {
-  //   // implement getters for fields and 'add/remove student' and 'set status' methods
-  
-  //   _area;
-  //   _status;
-  //   _students = []; // Modify the array so that it has a valid toSorted method*
-  
-  //   constructor(directionName, levelName) {
-  //     this.directionName = directionName;
-  //     this.levelName = levelName;
-  //   }
-  
-  //   showPerformance() {
-  //     const sortedStudents = this._students.toSorted((a, b) => b.getPerformanceRating() - a.getPerformanceRating());
-  //     return sortedStudents;
-  //   }
-  // }
-
   enum Status {
     Active = 'Active',
     Inactive = 'Inactive',
@@ -131,6 +112,10 @@ class School {
     this.levelName = levelName;
     this._status = Status.Active; 
   }
+
+    set area(value: string) {
+      this._area = value;
+    }
 
     get area(): string {
       return this._area;
