@@ -100,26 +100,27 @@ class School {
   }
 
   class Group {
-    private _area: string;
+   private _area: Area;
     private _status: Status;
     private _students: Student[] = [];
     
     public directionName: string;
     public levelName: string;
   
-  constructor(directionName: string, levelName: string) {
+  constructor(directionName: string, levelName: string, area: Area) {
     this.directionName = directionName;
     this.levelName = levelName;
     this._status = Status.Active; 
+    this._area = area;
   }
 
-    set area(value: string) {
-      this._area = value;
-    }
+  set area(value: Area) {
+    this._area = value;
+  }
 
-    get area(): string {
-      return this._area;
-    }
+  get area(): Area {
+    return this._area;
+  }
   
     get status(): Status {
       return this._status;
