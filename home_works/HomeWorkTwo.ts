@@ -100,7 +100,7 @@ class School {
   }
 
   class Group {
-   private _area: Area;
+    private _area: Area;
     private _status: Status;
     private _students: Student[] = [];
     
@@ -114,13 +114,9 @@ class School {
     this._area = area;
   }
 
-  set area(value: Area) {
-    this._area = value;
-  }
-
-  get area(): Area {
-    return this._area;
-  }
+    get area(): Area {
+      return this._area;
+    }
   
     get status(): Status {
       return this._status;
