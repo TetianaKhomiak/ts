@@ -11,17 +11,8 @@
 
     constructor(color: string, name: string) {
       super();
-      this.color=color;
-      this.name=name;
-    }
-
-    public print(): void {
-      if (this.name === "Rectangle" || this.name === "Square") {
-        const area = this.calculateArea();
-        console.log(
-          `Area of ${this.name} with color ${this.color} is equal to ${area}`
-        );
-      }
+      this.color = color;
+      this.name = name;
     }
 
     public calculateArea(): number {

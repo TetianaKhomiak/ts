@@ -262,15 +262,6 @@ const App = () => {
       this.name = name;
     }
 
-    public print(): void {
-      if (this.name === "Rectangle" || this.name === "Square") {
-        const area = this.calculateArea();
-        console.log(
-          `Area of ${this.name} with color ${this.color} is equal to ${area}`
-        );
-      }
-    }
-
     public calculateArea(): number {
       console.log("Method is required to be implemented.");
       return 0;
