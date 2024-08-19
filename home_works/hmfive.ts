@@ -1,99 +1,218 @@
-abstract class Shape {
+  abstract class BaseShape{
     public abstract readonly color: string;
     public abstract readonly name: string;
 
-    abstract calculateArea(): number;  
-}
+    public abstract calculateArea(): number;
+  }
 
-class Circle extends Shape {
+  class Shape extends BaseShape {
     public readonly color: string;
-    public readonly name: string = 'Circle';
-    private readonly radius: number;
+    public readonly name: string;
 
-    constructor(color: string, radius: number) {
-        super();
-        this.color = color;
-        this.radius = radius;
+    constructor(color: string, name: string) {
+      super();
+      this.color=color;
+      this.name=name;
+    }
+
+    public print(): void {
+      if (this.name === "Rectangle" || this.name === "Square") {
+        const area = this.calculateArea();
+        console.log(
+          `Area of ${this.name} with color ${this.color} is equal to ${area}`
+        );
+      }
     }
 
     public calculateArea(): number {
-        return Math.PI * this.radius * this.radius;
+     console.log("Method is required to be implemented.");
+     return 0;
     }
-}
+  }
 
-class Triangle extends Shape {
-    public readonly color: string;
-    public readonly name: string = 'Triangle';
+  class Circle extends Shape {
+    private readonly radius: number;
+
+    constructor(color: string, radius: number) {
+      super(color, "Circle");
+      this.radius = radius;
+    }
+
+    public calculateArea(): number {
+      return Math.PI * this.radius * this.radius;
+    }
+  }
+
+  class Triangle extends Shape {
     private readonly base: number;
     private readonly height: number;
 
     constructor(color: string, base: number, height: number) {
-        super();
-        this.color = color;
-        this.base = base;
-        this.height = height;
+      super(color, "Triangle");
+      this.base = base;
+      this.height = height;
     }
 
     public calculateArea(): number {
-        return 0.5 * this.base * this.height;
+      return 0.5 * this.base * this.height;
     }
-}
+  }
 
-class Rectangle extends Shape {
-    public readonly color: string;
-    public readonly name: string = 'Rectangle';
+  class Rectangle extends Shape {
     private readonly width: number;
     private readonly height: number;
 
     constructor(color: string, width: number, height: number) {
-        super();
-        this.color = color;
-        this.width = width;
-        this.height = height;
+      super(color, "Rectangle");
+      this.width = width;
+      this.height = height;
     }
 
     public calculateArea(): number {
-        return this.width * this.height;
+      return this.width * this.height;
     }
 
     public print(): void {
-        const area = this.calculateArea();
-        console.log(`Area of ${this.name} with color ${this.color} is equal to ${area}`);
+      const area = this.calculateArea();
+      console.log(
+        `Area of ${this.name} with color ${this.color} is equal to ${area}`
+      );
     }
-}
+  }
 
-class Square extends Shape {
-    public readonly color: string;
-    public readonly name: string = 'Square';
+  class Square extends Shape {
     private readonly side: number;
 
     constructor(color: string, side: number) {
-        super();
-        this.color = color;
-        this.side = side;
+      super(color, "Square");
+      this.side = side;
     }
 
     public calculateArea(): number {
-        return this.side * this.side;
+      return this.side * this.side;
     }
 
     public print(): void {
-        const area = this.calculateArea();
-        console.log(`Area of ${this.name} with color ${this.color} is equal to ${area}`);
+      const area = this.calculateArea();
+      console.log(
+        `Area of ${this.name} with color ${this.color} is equal to ${area}`
+      );
     }
-}
+  }
+
+  const circle = new Circle("Green", 1);
+  console.log(circle.calculateArea());
+
+  const triangle = new Triangle("Gray", 2, 18);
+  console.log(triangle.calculateArea());
+
+  const rectangle = new Rectangle("Black", 7, 3);
+  console.log(rectangle.calculateArea());
+  rectangle.print();
+
+  const square = new Square("Red", 8);
+  console.log(square.calculateArea());
+  square.print();
 
 
-const circle = new Circle("Green", 1);
-circle.calculateArea(); 
 
-const triangle = new Triangle("Gray", 2, 18);
-triangle.calculateArea(); 
+// abstract class Shape {
+//     public abstract readonly color: string;
+//     public abstract readonly name: string;
 
-const rectangle = new Rectangle("Black", 7, 3);
-rectangle.calculateArea(); 
-rectangle.print(); 
+//     abstract calculateArea(): number;  
+// }
 
-const square = new Square("Red", 8);
-square.calculateArea(); 
-square.print(); 
+
+// class Circle extends Shape {
+//     public readonly color: string;
+//     public readonly name: string = 'Circle';
+//     private readonly radius: number;
+
+//     constructor(color: string, radius: number) {
+//         super();
+//         this.color = color;
+//         this.radius = radius;
+//     }
+
+//     public calculateArea(): number {
+//         return Math.PI * this.radius * this.radius;
+//     }
+// }
+
+// class Triangle extends Shape {
+//     public readonly color: string;
+//     public readonly name: string = 'Triangle';
+//     private readonly base: number;
+//     private readonly height: number;
+
+//     constructor(color: string, base: number, height: number) {
+//         super();
+//         this.color = color;
+//         this.base = base;
+//         this.height = height;
+//     }
+
+//     public calculateArea(): number {
+//         return 0.5 * this.base * this.height;
+//     }
+// }
+
+// class Rectangle extends Shape {
+//     public readonly color: string;
+//     public readonly name: string = 'Rectangle';
+//     private readonly width: number;
+//     private readonly height: number;
+
+//     constructor(color: string, width: number, height: number) {
+//         super();
+//         this.color = color;
+//         this.width = width;
+//         this.height = height;
+//     }
+
+//     public calculateArea(): number {
+//         return this.width * this.height;
+//     }
+
+//     public print(): void {
+//         const area = this.calculateArea();
+//         console.log(`Area of ${this.name} with color ${this.color} is equal to ${area}`);
+//     }
+// }
+
+// class Square extends Shape {
+//     public readonly color: string;
+//     public readonly name: string = 'Square';
+//     private readonly side: number;
+
+//     constructor(color: string, side: number) {
+//         super();
+//         this.color = color;
+//         this.side = side;
+//     }
+
+//     public calculateArea(): number {
+//         return this.side * this.side;
+//     }
+
+//     public print(): void {
+//         const area = this.calculateArea();
+//         console.log(`Area of ${this.name} with color ${this.color} is equal to ${area}`);
+//     }
+// }
+
+
+// const circle = new Circle("Green", 1);
+// circle.calculateArea(); 
+
+// const triangle = new Triangle("Gray", 2, 18);
+// triangle.calculateArea(); 
+
+// const rectangle = new Rectangle("Black", 7, 3);
+// rectangle.calculateArea(); 
+// rectangle.print(); 
+
+// const square = new Square("Red", 8);
+// square.calculateArea(); 
+// square.print(); 
