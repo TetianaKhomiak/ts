@@ -8,7 +8,7 @@
     "module": "ESNext",
     "skipLibCheck": true,
    //"strictNullChecks": false,
-
+  // "strictPropertyInitialization":true,
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,

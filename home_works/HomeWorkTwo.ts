@@ -9,10 +9,10 @@ type Lecturer = {
   };
   
 class School {
-    private _areas: Area[] = [];
+    private _areas: Area[] = []; //[Area, Area, ...] where Area is {}  => [{},{}...]
     private _lecturers: Lecturer[] = [];
   
-    get areas(): Area[] {
+    get areas(): Area[] { //{name:string,[Level,Level...]} where Level is {}
       return this._areas;
     }
   
@@ -59,7 +59,7 @@ class School {
   
     removeLevel(levelName: string): void {
       this._levels = this._levels.filter(level => level.name !== levelName);
-    }
+  }
   }
 
   class Level {
@@ -91,6 +91,7 @@ class School {
     removeGroup(groupName: string): void {
       this._groups = this._groups.filter(group => group.levelName !== groupName);
     }
+ 
   }
 
   enum Status {
@@ -197,4 +198,46 @@ class School {
   }
   
 
-
+  // School {
+  //   _areas: [
+  //     {
+  //       name: '...',          // Area name
+  //       _levels: [            // Array of Level objects
+  //         {
+  //           name: '',         // Level name
+  //           description: '',  // Level description
+  //           _groups: [        // Array of Group objects
+  //             {
+  //               directionName: '', // Group's direction name
+  //               levelName: '',     // Group's level name
+  //               _area: {},         // Reference to the associated Area object
+  //               _status: '',       // Status (Active, Inactive, Pending)
+  //               _students: [       // Array of Student objects
+  //                 {
+  //                   _firstName: '',     // Student's first name
+  //                   _lastName: '',      // Student's last name
+  //                   _birthYear: '',     // Student's birth year
+  //                   _grades: {},        // Object with workName as keys and grades as values
+  //                   _visits: {},        // Object with lesson names as keys and attendance (boolean) as values
+  //                   getPerformanceRating(): number // Method to calculate performance rating
+  //                 }
+  //               ]
+  //             }
+  //           ]
+  //         }
+  //       ]
+  //     }
+  //   ],
+  //   _lecturers: [            // Array of Lecturer objects
+  //     {
+  //       name: '',             // Lecturer's name
+  //       surname: '',          // Lecturer's surname
+  //       position: '',         // Lecturer's position
+  //       company: '',          // Lecturer's company
+  //       experience: 0,        // Lecturer's experience in years
+  //       courses: [],          // Array of course names
+  //       contacts: []          // Array of contact methods (e.g., email, phone)
+  //     }
+  //   ]
+  // }
+  
