@@ -8,9 +8,10 @@
     "module": "ESNext",
     "skipLibCheck": true,
     "noUncheckedIndexedAccess": true,
-    //"noPropertyAccessFromIndexSignature": true,
+    "noPropertyAccessFromIndexSignature": true,
    //"strictNullChecks": false,
   // "strictPropertyInitialization":true,
+  // "strictFunctionTypes":true,
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,

@@ -80,3 +80,4 @@ const allNumbersExample: StringNumberMap = {
     d: 4,
 };
 console.log(areValuesNumbers(allNumbersExample)); // true
+

@@ -245,6 +245,81 @@
 // export default App;
 import React from "react";
 const App = () => {
+  // type B<T> = T extends IAdmin
+  //   ? "admin"
+  //   : T extends IGuest
+  //   ? "guest"
+  //   : T extends IUser
+  //   ? "user"
+  //   : "no user";
+
+  // let a: A<IUser>; // 'user' (correctly identified as user)
+  // let b: A<IAdmin>; // 'admin' (now correctly identified as admin)
+  // let c: A<IGuest>; // 'guest' (correctly identified as guest)
+
+  // let d: B<IGuest>; // 'guest' (correctly identified as guest)
+  // let e: B<IAdmin>; // 'admin' (correctly identified as admin)
+  // let f: B<IUser>; // 'user' (correctly identified as user)
+  type DeepRequireReadonly<T> = {
+    readonly [K in keyof T]-?: T[K] extends object
+      ? DeepRequireReadonly<T[K]>
+      : T[K];
+  };
+
+  type MyObject = {
+    name?: string;
+    details?: {
+      age?: number;
+      address?: {
+        city?: string;
+        country?: string;
+        postalCode?: {
+          code?: number;
+          prefix?: string;
+        };
+      };
+    };
+  };
+
+  const deepRequireReadonly: DeepRequireReadonly<MyObject> = {
+    name: "Tetiana",
+    details: {
+      age: 30,
+      address: {
+        city: "Kyiv",
+        country: "Ukraine",
+        postalCode: {
+          code: 12345,
+          prefix: "UA",
+        },
+      },
+    },
+  };
+
+  readonlyObject.name = "Tania"; //a read-only property
+  readonlyObject.details.age = "25"; //a read-only property
+  readonlyObject.details.address.city = "Zhytomyr"; //a read-only property
+  readonlyObject.details.address.postalCode.code = 54321; //a read-only property
+
+  const incompleteObject: DeepRequireReadonly<MyObject> = {
+    name: "Incomplete", // missing in type '{ name: string; }'
+  };
+
+  const completeObject: DeepRequireReadonly<MyObject> = {
+    name: "Tania",
+    details: {
+      age: 20,
+      address: {
+        city: "Zhytomyr",
+        country: "Ukraine",
+        postalCode: {
+          code: 54321,
+          prefix: "UA",
+        },
+      },
+    },
+  };
+
   return <div>App</div>;
 };
 
