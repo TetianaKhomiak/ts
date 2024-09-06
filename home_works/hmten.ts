@@ -3,6 +3,7 @@
 type DeepReadonly<T> = {
   readonly [K in keyof T]: T[K] extends object ? DeepReadonly<T[K]> : T[K];
 };
+
 type MyObject = {
   name: string;
   details: {
@@ -103,6 +104,7 @@ const completeObject: DeepRequireReadonly<MyObjectOptional> = {
 //3. створити тип UpperCaseKeys, який буде приводити всі ключі до верхнього регістру.
 
 type ToGetter<T extends string> = Uppercase<T>;
+
 type UpperCaseKeys<T> = {
   [K in keyof T & string as ToGetter<K>]: T[K];
 };
@@ -133,3 +135,35 @@ const obj: UppercaseObject = {
 
 // 4. Створіть тип ObjectToPropertyDescriptor, який перетворює
 // звичайний обʼєкт на обʼєкт де кожне value є дескриптором.
+type PropertyDescriptor<T> = {
+  value: T;
+  writable: boolean;
+  configurable: boolean;
+  enumerable: boolean;
+};
+
+type ObjectToPropertyDescriptor<T> = {
+  [K in keyof T]: PropertyDescriptor<T[K]>;
+};
+
+type MyObject3 = {
+  name: string;
+  age: number;
+};
+
+type MyObjectDescriptor = ObjectToPropertyDescriptor<MyObject3>;
+
+const obj2: MyObjectDescriptor = {
+  name: {
+    value: "Tetiana",
+    writable: true,
+    configurable: true,
+    enumerable: true,
+  },
+  age: {
+    value: 30,
+    writable: true,
+    configurable: true,
+    enumerable: true,
+  },
+};

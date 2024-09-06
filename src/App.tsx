@@ -261,36 +261,20 @@ const App = () => {
   // let e: B<IAdmin>; // 'admin' (correctly identified as admin)
   // let f: B<IUser>; // 'user' (correctly identified as user)
 
-  // type ToGetter<T extends string> = Uppercase<T>;
-  // type UpperCaseKeys<T> = {
-  //   [K in keyof T & string as ToGetter<K>]: T[K];
-  // };
-
-  // or
-  type UpperCaseKeys<T> = {
-    [K in keyof T as Uppercase<string & K>]: T[K];
-  };
-
-  type MyObject2 = {
-    name: string;
-    age: number;
-    city: string;
-  };
-
-  type UppercaseObject = UpperCaseKeys<MyObject2>;
-  // type UppercaseObject = {
-  //   NAME: string;
-  //   AGE: number;
-  //   CITY: string;
-  // };
-
-  const obj: UppercaseObject = {
-    NAME: "Tetiana",
-    AGE: 30,
-    CITY: "Kyiv",
-  };
-
-  console.log(obj);
+  // {
+  //   name: {
+  //     value: string;
+  //     writable: boolean;
+  //     configurable: boolean;
+  //     enumerable: boolean;
+  //   },
+  //   age: {
+  //     value: number;//T[K]
+  //     writable: boolean;
+  //     configurable: boolean;
+  //     enumerable: boolean;
+  //   }
+  // }
 
   return <div>App</div>;
 };
