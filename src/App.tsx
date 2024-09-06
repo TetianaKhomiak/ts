@@ -260,65 +260,37 @@ const App = () => {
   // let d: B<IGuest>; // 'guest' (correctly identified as guest)
   // let e: B<IAdmin>; // 'admin' (correctly identified as admin)
   // let f: B<IUser>; // 'user' (correctly identified as user)
-  type DeepRequireReadonly<T> = {
-    readonly [K in keyof T]-?: T[K] extends object
-      ? DeepRequireReadonly<T[K]>
-      : T[K];
+
+  // type ToGetter<T extends string> = Uppercase<T>;
+  // type UpperCaseKeys<T> = {
+  //   [K in keyof T & string as ToGetter<K>]: T[K];
+  // };
+
+  // or
+  type UpperCaseKeys<T> = {
+    [K in keyof T as Uppercase<string & K>]: T[K];
   };
 
-  type MyObject = {
-    name?: string;
-    details?: {
-      age?: number;
-      address?: {
-        city?: string;
-        country?: string;
-        postalCode?: {
-          code?: number;
-          prefix?: string;
-        };
-      };
-    };
+  type MyObject2 = {
+    name: string;
+    age: number;
+    city: string;
   };
 
-  const deepRequireReadonly: DeepRequireReadonly<MyObject> = {
-    name: "Tetiana",
-    details: {
-      age: 30,
-      address: {
-        city: "Kyiv",
-        country: "Ukraine",
-        postalCode: {
-          code: 12345,
-          prefix: "UA",
-        },
-      },
-    },
+  type UppercaseObject = UpperCaseKeys<MyObject2>;
+  // type UppercaseObject = {
+  //   NAME: string;
+  //   AGE: number;
+  //   CITY: string;
+  // };
+
+  const obj: UppercaseObject = {
+    NAME: "Tetiana",
+    AGE: 30,
+    CITY: "Kyiv",
   };
 
-  readonlyObject.name = "Tania"; //a read-only property
-  readonlyObject.details.age = "25"; //a read-only property
-  readonlyObject.details.address.city = "Zhytomyr"; //a read-only property
-  readonlyObject.details.address.postalCode.code = 54321; //a read-only property
-
-  const incompleteObject: DeepRequireReadonly<MyObject> = {
-    name: "Incomplete", // missing in type '{ name: string; }'
-  };
-
-  const completeObject: DeepRequireReadonly<MyObject> = {
-    name: "Tania",
-    details: {
-      age: 20,
-      address: {
-        city: "Zhytomyr",
-        country: "Ukraine",
-        postalCode: {
-          code: 54321,
-          prefix: "UA",
-        },
-      },
-    },
-  };
+  console.log(obj);
 
   return <div>App</div>;
 };
