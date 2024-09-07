@@ -137,9 +137,9 @@ const obj: UppercaseObject = {
 // звичайний обʼєкт на обʼєкт де кожне value є дескриптором.
 type PropertyDescriptor<T> = {
   value: T;
-  writable: boolean;
-  configurable: boolean;
-  enumerable: boolean;
+  writable?: boolean;
+  configurable?: boolean;
+  enumerable?: boolean;
 };
 
 type ObjectToPropertyDescriptor<T> = {

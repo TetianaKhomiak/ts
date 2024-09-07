@@ -275,6 +275,38 @@ const App = () => {
   //     enumerable: boolean;
   //   }
   // }
+  type PropertyDescriptor<T> = {
+    value: T;
+    writable?: boolean;
+    configurable?: boolean;
+    enumerable?: boolean;
+  };
+
+  type ObjectToPropertyDescriptor<T> = {
+    [K in keyof T]: PropertyDescriptor<T[K]>;
+  };
+
+  type MyObject3 = {
+    name: string;
+    age: number;
+  };
+
+  type MyObjectDescriptor = ObjectToPropertyDescriptor<MyObject3>;
+
+  const obj2: MyObjectDescriptor = {
+    name: {
+      value: "Tetiana",
+      writable: true,
+      configurable: true,
+      enumerable: true,
+    },
+    age: {
+      value: 30,
+      writable: true,
+      configurable: true,
+      enumerable: true,
+    },
+  };
 
   return <div>App</div>;
 };
