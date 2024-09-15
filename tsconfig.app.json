@@ -9,6 +9,7 @@
     "skipLibCheck": true,
     "noUncheckedIndexedAccess": true,
     "noPropertyAccessFromIndexSignature": true,
+    //"noImplicitAny": false,
    //"strictNullChecks": false,
   // "strictPropertyInitialization":true,
   // "strictFunctionTypes":true,
