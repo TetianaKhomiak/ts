@@ -182,21 +182,21 @@ const App = () => {
 
   const movieList = new MovieList(movies);
 
-  // 1. filtering by title
-  // movieList.applySearchValue("Movie B");
-  // const filteredByName = movieList.filterMovies();
-  // console.log("Filtered by Name:", filteredByName);
+  //1. filtering by title
+  movieList.applySearchValue("Movie B");
+  const filteredByName = movieList.filterMovies();
+  console.log("Filtered by Name:", filteredByName);
 
   // 2. filtering by year
   // movieList.applyFiltersValue({
-  //   year: { type: GridFilterTypeEnum.Range, filter: 2021, filterTo: undefined },
+  //   year: { type: GridFilterTypeEnum.Range, filter: 2018, filterTo: 2019 },
   // });
   // const filteredByYear = movieList.filterMovies();
   // console.log("Filtered by Year:", filteredByYear);
 
   // 3. filtering by raiting
   // movieList.applyFiltersValue({
-  //   rating: { type: GridFilterTypeEnum.Match, filter: 9.0 },
+  //   rating: { type: GridFilterTypeEnum.Match, filter: 8 },
   // });
   // const filteredByRating = movieList.filterMovies();
   // console.log("Filtered by Rating:", filteredByRating);
@@ -216,9 +216,9 @@ const App = () => {
 
   //5. filtering by categories
   const categoryList = new CategoryList(categories, movieList);
-  categoryList.applySearchValue("Drama");
+  categoryList.applySearchValue("Action");
   const filteredCategories = categoryList.filterCategories();
-  console.log("Filtered Movies in Action Category:", filteredCategories);
+  console.log("Filtered by Category:", filteredCategories);
 
   return <div>App</div>;
 };
