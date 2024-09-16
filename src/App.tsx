@@ -6,10 +6,8 @@ const App = () => {
     SetValues = "SetValues",
   }
 
-  // type GridFilterMatch<T> = {
-  //   filter: Extract<T, string | number>;
-  // };
   type GridFilterMatch<T extends number> = {
+    type: GridFilterTypeEnum;
     filter: T;
   };
 
@@ -20,6 +18,7 @@ const App = () => {
   };
 
   type GridFilterSetValues<T> = {
+    type: GridFilterTypeEnum;
     values: T[];
   };
 
@@ -28,6 +27,7 @@ const App = () => {
     year: number;
     rating: number;
     awards: string[];
+    category: string;
   }
 
   interface MovieCategory {
@@ -55,7 +55,10 @@ const App = () => {
     }
 
     applySearchValue(search: string) {
-      this.filterState.search = { values: [search] };
+      this.filterState.search = {
+        values: [search],
+        type: GridFilterTypeEnum.SetValues,
+      };
     }
 
     applyFiltersValue(filters: MovieFilters) {
@@ -81,13 +84,12 @@ const App = () => {
       movie: Movie,
       search?: GridFilterSetValues<string>
     ): boolean {
-      if (!search) return true;
-      //return search.values.some((value) => movie.title.includes(value));
+      if (!search || search.type !== GridFilterTypeEnum.SetValues) return true;
       return search.values.includes(movie.title);
     }
 
     private matchesYear(movie: Movie, year?: GridFilterValue<number>): boolean {
-      if (!year) return true;
+      if (!year || year.type !== GridFilterTypeEnum.Range) return true;
       return (
         movie.year >= year.filter &&
         (!year.filterTo || movie.year <= year.filterTo)
@@ -98,7 +100,7 @@ const App = () => {
       movie: Movie,
       rating?: GridFilterMatch<number>
     ): boolean {
-      if (!rating) return true;
+      if (!rating || rating.type !== GridFilterTypeEnum.Match) return true;
       return movie.rating === rating.filter;
     }
 
@@ -106,7 +108,7 @@ const App = () => {
       movie: Movie,
       awards?: GridFilterSetValues<string>
     ): boolean {
-      if (!awards) return true;
+      if (!awards || awards.type !== GridFilterTypeEnum.SetValues) return true;
       return awards.values.every((award) => movie.awards.includes(award));
     }
   }
@@ -114,29 +116,32 @@ const App = () => {
   class CategoryList {
     private categories: MovieCategory[];
     private filterState: CategoryFilters = {};
+    private movieList: MovieList;
 
-    constructor(categories: MovieCategory[]) {
+    constructor(categories: MovieCategory[], movieList: MovieList) {
       this.categories = categories;
+      this.movieList = movieList;
     }
 
     applySearchValue(search: string) {
-      this.filterState.search = { values: [search] };
+      this.filterState.search = {
+        values: [search],
+        type: GridFilterTypeEnum.SetValues,
+      };
     }
 
     filterCategories(): Movie[] {
-      return this.categories.flatMap((category) => {
-        const { search } = this.filterState;
+      const search = this.filterState.search;
 
-        if (!search) {
+      return this.categories.flatMap((category) => {
+        if (!search || search.type !== GridFilterTypeEnum.SetValues) {
           return [];
         }
 
         if (search.values.some((value) => category.title.includes(value))) {
-          return category.movies.filter((movie) =>
-            search.values.some((searchValue) =>
-              movie.title.includes(searchValue)
-            )
-          );
+          return this.movieList.filterMovies().filter((movie) => {
+            return movie.category === category.title;
+          });
         }
 
         return [];
@@ -145,15 +150,34 @@ const App = () => {
   }
 
   const movies: Movie[] = [
-    { title: "Movie A", year: 2020, rating: 8.5, awards: ["Oscar"] },
-    { title: "Movie B", year: 2019, rating: 7.8, awards: ["Golden Globe"] },
+    {
+      title: "Movie A",
+      year: 2020,
+      rating: 8.5,
+      awards: ["Oscar"],
+      category: "Action",
+    },
+    {
+      title: "Movie B",
+      year: 2019,
+      rating: 7.8,
+      awards: ["Golden Globe"],
+      category: "Action",
+    },
     {
       title: "Movie",
       year: 2018,
       rating: 8,
       awards: ["Golden Globe", "Oscar"],
+      category: "Comedy",
     },
-    { title: "Movie C", year: 2021, rating: 9.0, awards: [] },
+    {
+      title: "Movie C",
+      year: 2021,
+      rating: 9.0,
+      awards: [],
+      category: "Drama",
+    },
   ];
 
   const movieList = new MovieList(movies);
@@ -172,29 +196,29 @@ const App = () => {
 
   // 3. filtering by raiting
   // movieList.applyFiltersValue({
-  //   rating: { filter: 9.0 },
+  //   rating: { type: GridFilterTypeEnum.Match, filter: 9.0 },
   // });
   // const filteredByRating = movieList.filterMovies();
   // console.log("Filtered by Rating:", filteredByRating);
 
   //4. filtering by awards
   // movieList.applyFiltersValue({
-  //   awards: { values: ["Oscar"] },
+  //   awards: { type: GridFilterTypeEnum.SetValues, values: ["Oscar"] },
   // });
   // const filteredByAwards = movieList.filterMovies();
   // console.log("Filtered by Awards:", filteredByAwards);
 
   const categories: MovieCategory[] = [
-    { title: "Movie A", movies: movies },
-    { title: "Movie B", movies: movies },
+    { title: "Action", movies: movies },
+    { title: "Comedy", movies: movies },
+    { title: "Drama", movies: movies },
   ];
 
-  const categoryList = new CategoryList(categories);
-
-  // 1. filtering by title
-  // categoryList.applySearchValue("Movie A");
-  // const filteredCategories = categoryList.filterCategories();
-  // console.log("Filtered Categories:", filteredCategories);
+  //5. filtering by categories
+  const categoryList = new CategoryList(categories, movieList);
+  categoryList.applySearchValue("Drama");
+  const filteredCategories = categoryList.filterCategories();
+  console.log("Filtered Movies in Action Category:", filteredCategories);
 
   return <div>App</div>;
 };
